@@ -1,11 +1,14 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 
+import "constants.js" as Constants
+
 ApplicationWindow {
     visible: true
-    width: 640
-    height: 480
-    title: qsTr("Hello World")
+    width: Constants.WND_MINIMUM_WIDTH
+    height: Constants.WND_MINIMUM_HEIGHT
+
+    title: qsTr("Chess")
 
     menuBar: MenuBar {
         Menu {
@@ -20,9 +23,9 @@ ApplicationWindow {
             }
         }
     }
+    Board {
 
-    Text {
-        text: qsTr("Hello World")
         anchors.centerIn: parent
     }
+
 }

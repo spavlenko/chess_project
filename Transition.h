@@ -1,17 +1,20 @@
 #ifndef TRANSITION_H
 #define TRANSITION_H
 
-#include <QObject>
+#include "Figure.h"
+#include "Types.h"
 
-class Transition : public QObject
+class Transition
 {
-    Q_OBJECT
 public:
-    explicit Transition(QObject *parent = 0);
+    Transition(TIndex from, TIndex to, Figure::Side actor, Figure::Type victim);
 
-signals:
+public:
+    TIndex m_from;
+    TIndex m_to;
+    Figure::Side m_actor;
+    Figure::Type m_victim;
 
-public slots:
 
 };
 

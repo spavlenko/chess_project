@@ -1,6 +1,8 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
+#include "BoardController.h"
+
 #include <QObject>
 
 class GameController : public QObject
@@ -9,9 +11,11 @@ class GameController : public QObject
 public:
     explicit GameController(QObject *parent = 0);
 
-signals:
+    Q_INVOKABLE BoardController* boardController();
 
-public slots:
+
+private:
+    BoardController m_board_controller;
 
 };
 

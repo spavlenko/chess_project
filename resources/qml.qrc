@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/constants.js</file>
+        <file>qml/Board.qml</file>
+        <file>qml/ChessFigure.qml</file>
+        <file>qml/BoardCell.qml</file>
+        <file>qml/Style.qml</file>
+        <file>qml/qmldir</file>
+    </qresource>
+    <qresource prefix="/images/black">
+        <file alias="bishop">images/black/bishop.svg</file>
+        <file alias="knight">images/black/kniht.svg</file>
+        <file alias="king">images/black/king.svg</file>
+        <file alias="pawn">images/black/pawn.svg</file>
+        <file alias="queen">images/black/queen.svg</file>
+        <file alias="rook">images/black/rook.svg</file>
+    </qresource>
+    <qresource prefix="/images/white">
+        <file alias="bishop">images/white/bishop.svg</file>
+        <file alias="knight">images/white/knight.svg</file>
+        <file alias="king">images/white/king.svg</file>
+        <file alias="pawn">images/white/pawn.svg</file>
+        <file alias="queen">images/white/queen.svg</file>
+        <file alias="rook">images/white/rook.svg</file>
+    </qresource>
+</RCC>
