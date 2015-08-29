@@ -81,7 +81,6 @@ QQmlListProperty<Figure> BoardController::board()
     return QQmlListProperty<Figure> (this, m_figures);
 }
 
-
 void BoardController::_initBoard()
 {
     for(int i = 0; i < 64; ++i)

@@ -3,8 +3,8 @@
 
 Figure::Figure(QObject *parent) :
     QObject(parent),
-    m_type(NONE),
-    m_side(WHITE)
+    m_type(Type::NONE),
+    m_side(Side::WHITE)
 {
 
 }

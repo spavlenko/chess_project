@@ -9,7 +9,8 @@ SOURCES += main.cpp \
     GameController.cpp \
     LogicController.cpp \
     Transition.cpp \
-    BoardController.cpp
+    BoardController.cpp \
+    TransitionHistory.cpp
 
 RESOURCES += resources/qml.qrc
 
@@ -25,4 +26,5 @@ HEADERS += \
     LogicController.h \
     Transition.h \
     BoardController.h \
-    Types.h
+    Types.h \
+    TransitionHistory.h

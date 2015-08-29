@@ -2,6 +2,7 @@
 #define GAMECONTROLLER_H
 
 #include "BoardController.h"
+#include "TransitionHistory.h"
 
 #include <QObject>
 
@@ -16,6 +17,7 @@ public:
 
 private:
     BoardController m_board_controller;
+    TransitionHistory m_transition_history;
 
 };
 
