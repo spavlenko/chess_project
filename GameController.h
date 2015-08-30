@@ -20,9 +20,14 @@ public:
     Q_INVOKABLE bool prevTransition();
     Q_INVOKABLE bool nextTransition();
 
+signals:
+    void nextAvailable(bool available);
+    void prevAvailable(bool available);
 
 private:
     void _connectSignals();
+    void _notifyTransitionsAvaliability();
+
 
 private:
     BoardController m_board_controller;

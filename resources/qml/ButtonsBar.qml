@@ -50,6 +50,7 @@ ColumnLayout {
 
         Button {
             id: button_prev
+            enabled: false
             Layout.minimumWidth: 50
 
             Layout.minimumHeight: 50
@@ -69,6 +70,7 @@ ColumnLayout {
 
         Button {
             id: button_next
+            enabled: false
             Layout.minimumWidth: 50
 
             Layout.minimumHeight: 50
@@ -83,6 +85,19 @@ ColumnLayout {
             onClicked: {
                 if(!game.nextTransition())
                   console.log("Unable to perform next");
+            }
+        }
+
+        Connections {
+            target: game
+            onNextAvailable: {
+                console.log("next aval = " + available);
+               button_next.enabled = available;
+            }
+
+            onPrevAvailable: {
+                console.log("prev aval = " + available);
+               button_prev.enabled = available;
             }
         }
 

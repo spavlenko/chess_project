@@ -22,6 +22,9 @@ public:
     const Transition* next();
     const Transition* prev();
 
+signals:
+    void historyChanged();
+
 private:
     void _resetIterator();
 

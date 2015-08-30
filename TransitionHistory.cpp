@@ -15,8 +15,9 @@ void TransitionHistory::clear()
 void TransitionHistory::add(const Transition &transition)
 {
     m_transitions.append(transition);
-
     m_iterator = m_transitions.size();
+
+    emit historyChanged();
 }
 
 bool TransitionHistory::isNextAvailable() const
@@ -48,8 +49,8 @@ const Transition *TransitionHistory::prev()
 void TransitionHistory::_resetIterator()
 {
     m_iterator = 0;
+    emit historyChanged();
 }
-
 
 QDataStream &operator<<(QDataStream &data, const TransitionHistory &history)
 {

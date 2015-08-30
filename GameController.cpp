@@ -55,6 +55,7 @@ void GameController::load()
     stream >> m_transition_history;
     file.close();
     boardController()->resetBoard();
+    _notifyTransitionsAvaliability();
     qDebug() << "Game sucessfully laded";
 }
 
@@ -66,6 +67,7 @@ bool GameController::prevTransition()
     auto& transition = *(m_transition_history.prev());
     boardController()->rollbackTransition(transition);
 
+    _notifyTransitionsAvaliability();
     return true;
 }
 
@@ -77,12 +79,23 @@ bool GameController::nextTransition()
     auto& transition = *(m_transition_history.next());
     boardController()->performTransition(transition);
 
+    _notifyTransitionsAvaliability();
     return true;
 }
+
 
 void GameController::_connectSignals()
 {
     QObject::connect(&m_board_controller, &BoardController::figureMoved,
                      &m_transition_history, &TransitionHistory::add);
+
+    QObject::connect(&m_transition_history, &TransitionHistory::historyChanged,
+                     [this](){_notifyTransitionsAvaliability();});
+}
+
+void GameController::_notifyTransitionsAvaliability()
+{
+    emit nextAvailable(m_transition_history.isNextAvailable());
+    emit prevAvailable(m_transition_history.isPrevAvailable());
 }
 
