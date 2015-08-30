@@ -40,9 +40,9 @@ void GameController::stop()
     _setMode(INIT);
 }
 
-void GameController::save() const
+void GameController::save(QUrl path) const
 {
-    QFile file(save_path);
+    QFile file(path.toLocalFile());
 
     if(!file.open(QFile::WriteOnly | QFile::Truncate)) {
         qDebug() << "Something is wrong. Can't open file.";
@@ -59,9 +59,9 @@ void GameController::save() const
     qDebug() << "Game sucessfully saved";
 }
 
-void GameController::load()
+void GameController::load(QUrl path)
 {
-    QFile file(save_path);
+    QFile file(path.toLocalFile());
 
     if(!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Something is wrong. Can't open file.";

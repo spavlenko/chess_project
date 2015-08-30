@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import Chess 1.0
 import "."
 
 
@@ -85,7 +86,7 @@ Item {
                    when: root.side
                    PropertyChanges {
                        target: figure
-                       dragable: figure.side == root.side
+                       dragable: figure.side == root.side && game.mode != GameController.PLAYBACK
 
                    }
                }

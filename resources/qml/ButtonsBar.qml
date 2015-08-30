@@ -42,7 +42,6 @@ Item {
 
             onClicked: {
                 root.mode == GameController.GAME ? save() : load();
-                load();
             }
            }
 
@@ -140,7 +139,6 @@ Item {
                     target: prev_next_layout
                     visible: false
                 }
-
             },
 
             State {
@@ -160,12 +158,8 @@ Item {
                     target: prev_next_layout
                     visible: true
                 }
-
             }
-
-
         ]
-
     }
 }
 

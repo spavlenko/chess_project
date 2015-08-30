@@ -1,5 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 
 
@@ -13,10 +14,6 @@ ApplicationWindow {
     menuBar: MenuBar {
         Menu {
             title: qsTr("File")
-            MenuItem {
-                text: qsTr("&Open")
-                onTriggered: console.log("Open action triggered");
-            }
             MenuItem {
                 text: qsTr("Exit")
                 onTriggered: Qt.quit();
@@ -50,10 +47,29 @@ ApplicationWindow {
 
             onStart: game.start();
             onStop: game.stop();
-            onSave: game.save();
-            onLoad: game.load();
+            onSave: save_game_dialog.open();
+            onLoad: load_game_dialog.open();
             onPrev: game.prevTransition();
             onNext: game.nextTransition();
+        }
+
+        FileDialog {
+            id: save_game_dialog
+            title: "Save Game"
+            selectExisting: false
+            nameFilters: [ "Chess save files (*.csf)"]
+            onAccepted: {
+                game.save(save_game_dialog.fileUrl);
+            }
+        }
+
+        FileDialog {
+            id: load_game_dialog
+            title: "Open Game"
+            nameFilters: [ "Chess save files (*.csf)" ]
+            onAccepted: {
+                game.load(load_game_dialog.fileUrl);
+            }
         }
 
     }

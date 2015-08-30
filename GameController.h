@@ -5,6 +5,7 @@
 #include "TransitionHistory.h"
 
 #include <QObject>
+#include <QUrl>
 
 class GameController : public QObject
 {
@@ -30,8 +31,8 @@ public:
     Q_INVOKABLE void start();
     Q_INVOKABLE void stop();
 
-    Q_INVOKABLE void save() const;
-    Q_INVOKABLE void load();
+    Q_INVOKABLE void save(QUrl path) const;
+    Q_INVOKABLE void load(QUrl path);
 
     Q_INVOKABLE bool prevTransition();
     Q_INVOKABLE bool nextTransition();
