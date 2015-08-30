@@ -1,4 +1,5 @@
 #include "BoardController.h"
+#include <QDebug>
 
 namespace {
   Figure::Side _ChooseSide(int index)
@@ -63,11 +64,9 @@ bool BoardController::moveFigure(int from, int to)
     auto victim = figureAt(to)->type();
     auto actor = figureAt(from)->side();
 
-    std::swap(m_figures[from], m_figures[to]);
-
     Transition t(from, to, actor, victim);
+    _moveFigure(from, to);
     emit figureMoved(t);
-    emit boardChanged(board());
     return true;
 }
 
@@ -87,12 +86,35 @@ void BoardController::resetBoard()
     emit boardChanged(board());
 }
 
+void BoardController::performTransition(const Transition &transition)
+{
+    _moveFigure(transition.m_from, transition.m_to);
+}
+
+void BoardController::rollbackTransition(const Transition &transition)
+{
+    //to do: change actor color
+    _moveFigure(transition.m_to, transition.m_from, transition.m_victim, transition.m_actor);
+}
+
 void BoardController::_initBoard()
 {
     m_figures.clear();
 
     for(int i = 0; i < 64; ++i)
         m_figures.append(new Figure(this, _ChooseFigure(i), _ChooseSide(i)));
+}
+
+void BoardController::_moveFigure(int from, int to, Figure::Type displacer_type, Figure::Side displacer_side)
+{
+    std::swap(m_figures[from], m_figures[to]);
+    auto displacer = m_figures[from];
+    displacer->setType(displacer_type);
+    displacer->setSide(displacer_side);
+
+    qDebug() << "Move from " << from  << " to " << to;
+
+    emit boardChanged(board());
 }
 
 

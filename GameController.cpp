@@ -15,6 +15,7 @@ GameController::GameController(QObject *parent) :
     QObject(parent),
     m_board_controller(this)
 {
+    _connectSignals();
 }
 
 BoardController* GameController::boardController()
@@ -55,6 +56,28 @@ void GameController::load()
     file.close();
     boardController()->resetBoard();
     qDebug() << "Game sucessfully laded";
+}
+
+bool GameController::prevTransition()
+{
+    if(!m_transition_history.isPrevAvailable())
+        return false;
+
+    auto& transition = *(m_transition_history.prev());
+    boardController()->rollbackTransition(transition);
+
+    return true;
+}
+
+bool GameController::nextTransition()
+{
+    if(!m_transition_history.isNextAvailable())
+        return false;
+
+    auto& transition = *(m_transition_history.next());
+    boardController()->performTransition(transition);
+
+    return true;
 }
 
 void GameController::_connectSignals()

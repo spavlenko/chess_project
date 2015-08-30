@@ -4,7 +4,7 @@
 #include "Transition.h"
 
 #include <QObject>
-#include <QLinkedList>
+#include <QList>
 #include <QDataStream>
 
 class TransitionHistory : public QObject
@@ -16,17 +16,21 @@ public:
     void clear();
     void add(const Transition& transition);
 
+    bool isNextAvailable() const;
+    bool isPrevAvailable() const;
+
     const Transition* next();
     const Transition* prev();
 
 private:
-    void _initIterator();
+    void _resetIterator();
+
     friend  QDataStream &operator<<(QDataStream &data, const TransitionHistory &history);
     friend  QDataStream &operator>>(QDataStream &data, TransitionHistory &history);
 
 private:
-    QLinkedList<Transition> m_transitions;
-    QLinkedList<Transition>::iterator m_iterator;
+    QList<Transition> m_transitions;
+    int m_iterator = 1;
 };
 
  QDataStream &operator<<(QDataStream &data, const TransitionHistory &history);

@@ -3,47 +3,51 @@
 TransitionHistory::TransitionHistory(QObject *parent) :
     QObject(parent)
 {
+    _resetIterator();
 }
 
 void TransitionHistory::clear()
 {
     m_transitions.clear();
-    _initIterator();
+    _resetIterator();
 }
 
 void TransitionHistory::add(const Transition &transition)
 {
     m_transitions.append(transition);
 
-    if(m_transitions.size() == 1)
-       _initIterator();
+    m_iterator = m_transitions.size();
+}
+
+bool TransitionHistory::isNextAvailable() const
+{
+    return m_iterator <= m_transitions.size() - 1;
+}
+
+bool TransitionHistory::isPrevAvailable() const
+{
+    return m_iterator > 0;
 }
 
 const Transition *TransitionHistory::next()
 {
-    if(m_iterator == m_transitions.end())
+    if(!isNextAvailable())
       return nullptr;
 
-    auto res = &(*m_iterator);
-    ++m_iterator;
-
-    return res;
+    return &m_transitions.at(m_iterator++);
 }
 
 const Transition *TransitionHistory::prev()
 {
-    if(m_iterator == m_transitions.begin())
+    if(!isPrevAvailable())
       return nullptr;
 
-    auto res = &(*m_iterator);
-    ++m_iterator;
-
-    return res;
+    return &m_transitions.at(--m_iterator);
 }
 
-void TransitionHistory::_initIterator()
+void TransitionHistory::_resetIterator()
 {
-     m_iterator = m_transitions.begin();
+    m_iterator = 0;
 }
 
 
@@ -58,7 +62,7 @@ QDataStream &operator<<(QDataStream &data, const TransitionHistory &history)
 QDataStream &operator>>(QDataStream &data, TransitionHistory &history)
 {
     data >> history.m_transitions;
-    history._initIterator();
+    history._resetIterator();
 
     return data;
 }

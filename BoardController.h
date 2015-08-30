@@ -32,6 +32,7 @@ public:
     Q_INVOKABLE void resetBoard();
 
     void performTransition(const Transition& transition);
+    void rollbackTransition(const Transition& transition);
 
 signals:
     void figureMoved(const Transition& transition);
@@ -39,6 +40,9 @@ signals:
 
 private:
     void _initBoard();
+    void _moveFigure(int from, int to,
+                     Figure::Type displacer_type = Figure::NONE,
+                     Figure::Side displacer_side = Figure::UNDEF);
     
 private:
     QList<Figure*> m_figures;

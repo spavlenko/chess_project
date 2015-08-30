@@ -17,6 +17,10 @@ public:
     Q_INVOKABLE void save() const;
     Q_INVOKABLE void load();
 
+    Q_INVOKABLE bool prevTransition();
+    Q_INVOKABLE bool nextTransition();
+
+
 private:
     void _connectSignals();
 

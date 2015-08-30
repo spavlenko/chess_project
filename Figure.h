@@ -36,6 +36,9 @@ public:
     Side side() const;
     Type type() const;
 
+    void setSide(Side side);
+    void setType(Type type);
+
 signals:
     void sideChanged(Side side);
     void typeChanged(Type type);

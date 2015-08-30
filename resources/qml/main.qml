@@ -41,6 +41,7 @@ ApplicationWindow {
         }
 
         ColumnLayout {
+            id: buttons_bar_layout
             anchors.top: row_layout.top
             anchors.left: board.right;
             anchors.right: row_layout.right;
@@ -49,37 +50,85 @@ ApplicationWindow {
             spacing: 6
 
             Button {
-                   Layout.minimumWidth: 50
-                   Layout.preferredWidth: 100
-                   Layout.minimumHeight: 50
+                id: button_load
+                Layout.minimumWidth: 50
+                Layout.preferredWidth: 100
+                Layout.minimumHeight: 50
 
-                   anchors.left: parent.left; anchors.right: parent.right;
-                   Text {
-                       anchors.centerIn: parent
-                       text: "Load game"
-                   }
+                anchors.left: parent.left; anchors.right: parent.right;
+                Text {
+                    anchors.centerIn: parent
+                    text: "Load game"
+                }
 
-                   onClicked: {
-                       game.load();
-                   }
+                onClicked: {
+                    game.load();
+                }
                }
 
             Button {
-                   Layout.minimumWidth: 50
-                   Layout.preferredWidth: 100
+                id: button_save
+                Layout.minimumWidth: 40
+                Layout.preferredWidth: 47
 
-                   Layout.minimumHeight: 50
+                Layout.minimumHeight: 50
 
-                   anchors.left: parent.left; anchors.right: parent.right;
-                   Text {
-                       anchors.centerIn: parent
-                       text: "Save game"
-                   }
+                anchors.left: parent.left; anchors.right: parent.right;
+                Text {
+                    anchors.centerIn: parent
+                    text: "Save game"
+                }
 
-                   onClicked: {
-                       game.save();
-                   }
-               }
+                onClicked: {
+                    game.save();
+                }
+            }
+
+            RowLayout {
+                id: prev_next_layout
+                anchors.top: button_save.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Button {
+                    id: button_prev
+                    Layout.minimumWidth: 50
+
+                    Layout.minimumHeight: 50
+                    anchors.left: parent.left
+                    anchors.right: parent.horizontalCenter
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "<<"
+                    }
+
+                    onClicked: {
+                        if(!game.prevTransition())
+                          console.log("Unable to perform prev");
+                    }
+                }
+
+                Button {
+                    id: button_next
+                    Layout.minimumWidth: 50
+
+                    Layout.minimumHeight: 50
+                    anchors.right: parent.right;
+                    anchors.left: parent.horizontalCenter
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: ">>"
+                    }
+
+                    onClicked: {
+                        if(!game.nextTransition())
+                          console.log("Unable to perform next");
+                    }
+                }
+
+            }
 
         }
 

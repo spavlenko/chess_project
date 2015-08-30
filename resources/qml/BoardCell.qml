@@ -23,13 +23,11 @@ Item {
         onEntered: {
             dragging = true;
             dragEntered();
-            console.log("entered")
         }
 
         onExited: {
             dragging = false;
             dragLeft();
-            console.log("left")
         }
 
         Rectangle {
