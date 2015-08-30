@@ -1,10 +1,11 @@
 #include "BoardController.h"
+#include "Constants.h"
 #include <QDebug>
 
 namespace {
   Figure::Side _ChooseSide(int index)
   {
-      auto row = index / board_size;
+      auto row = index / Constants::board_size;
 
       if(row < 2)
         return Figure::Side::BLACK;
@@ -17,14 +18,14 @@ namespace {
 
   Figure::Type _ChooseFigure(int index)
   {
-      auto row = index / board_size;
+      auto row = index / Constants::board_size;
 
       if(row == 1 || row == 6)
         return Figure::Type::PAWN;
       else if(row != 0 && row != 7)
         return Figure::Type::NONE;
 
-      auto column = index % board_size;
+      auto column = index % Constants::board_size;
       switch(column)
       {
       case 0: case 7:

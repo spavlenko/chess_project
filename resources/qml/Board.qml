@@ -1,5 +1,4 @@
 import QtQuick 2.0
-import "constants.js" as Constants
 import "."
 
 
@@ -7,7 +6,8 @@ Item {
     id: root
     height: parent.width
     width: height
-    property int cell_size: width/Constants.BOARD_SIZE
+    property int board_size: 8
+    property int cell_size: width/board_size
     property int side: game.activeSide;
     Item {
         id: move
@@ -17,8 +17,8 @@ Item {
 
     Grid {
         id: board_grid
-        rows: Constants.BOARD_SIZE
-        columns: Constants.BOARD_SIZE
+        rows: board_size
+        columns: board_size
 
         Repeater {
             id: repeater
@@ -29,7 +29,7 @@ Item {
                 id: board_cell
                 side_length: root.cell_size
                 position: index
-
+                board_size: root.board_size
                 onDragEntered: {
                     move.drop_destination = position;
                     board_cell.drop_allowed =
@@ -49,8 +49,8 @@ Item {
         id: figures_grid
         anchors.fill: parent
 
-        rows: Constants.BOARD_SIZE
-        columns: Constants.BOARD_SIZE
+        rows: board_size
+        columns: board_size
 
         Repeater {
             id: repeater_figures;

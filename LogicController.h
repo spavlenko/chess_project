@@ -1,8 +1,6 @@
 #ifndef LOGICCONTROLLER_H
 #define LOGICCONTROLLER_H
 
-#include "Types.h"
-
 #include <QObject>
 #include <QList>
 

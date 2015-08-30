@@ -1,12 +1,12 @@
 import QtQuick 2.0
 import "."
-import "constants.js" as Constants
 
 Item {
     id: root
     property int side_length: -1
     property int position: -1
     property bool drop_allowed: false
+    property int board_size: -1
     width: side_length
     height: side_length
 
@@ -35,8 +35,8 @@ Item {
             height: parent.height
             border.width: 1
             border.color: Style.color_border
-            color: (Math.floor(root.position / Constants.BOARD_SIZE)
-                    + (root.position % Constants.BOARD_SIZE)) % 2
+            color: (Math.floor(root.position / board_size)
+                    + (root.position % board_size)) % 2
                     ? Style.color_cell_white : Style.color_cell_black
         }
 

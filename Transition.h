@@ -2,7 +2,6 @@
 #define TRANSITION_H
 
 #include "Figure.h"
-#include "Types.h"
 
 #include <QDataStream>
 

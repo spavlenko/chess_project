@@ -27,6 +27,6 @@ HEADERS += \
     LogicController.h \
     Transition.h \
     BoardController.h \
-    Types.h \
     TransitionHistory.h \
-    FiguresMoveRules.h
+    FiguresMoveRules.h \
+    Constants.h

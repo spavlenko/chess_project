@@ -1,5 +1,5 @@
 #include "FiguresMoveRules.h"
-#include "Types.h"
+#include "Constants.h"
 #include "BoardController.h"
 
 #include <cstdlib>
@@ -10,15 +10,15 @@ namespace  {
 
     TCoordinate _indexToCoord(int index)
     {
-        int row = index / board_size;
-        int col = index % board_size;
+        int row = index / Constants::board_size;
+        int col = index % Constants::board_size;
 
         return std::make_pair(row, col);
     }
 
     int _coordToIndex(int row, int col)
     {
-        return row * board_size + col;
+        return row * Constants::board_size + col;
     }
 
     int _coordToIndex(const TCoordinate& coord)
@@ -120,7 +120,7 @@ namespace  {
         auto coord_to = _indexToCoord(end);
         auto coord_from = _indexToCoord(start);
 
-        int step = coord_from.second - coord_to.second + board_size;
+        int step = coord_from.second - coord_to.second + Constants::board_size;
 
         for(; start < end; start += step)
             if(board.figureAt(start)->type() != Figure::NONE && board.figureAt(start)->type() != Figure::BISHOP)
@@ -163,7 +163,6 @@ bool isMoveValid(Figure::Type type, Figure::Side side, int from, int to, bool at
     }
 }
 
-
 bool isPositionAccessible(Figure::Type type, int from, int to, const BoardController &board)
 {
     switch (type) {
@@ -180,7 +179,6 @@ bool isPositionAccessible(Figure::Type type, int from, int to, const BoardContro
 
     case Figure::QUEEN:
          return isPositionAccessibleQueen(from, to, board);
-
 
     default:
         assert(!"Should not happen");
