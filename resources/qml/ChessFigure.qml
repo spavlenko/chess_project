@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Chess 1.0
+import "."
 
 Item {
     id: root
@@ -9,6 +10,7 @@ Item {
 
     property int  type: Figure.NONE
     property int  side: Figure.WHITE
+    property bool dragable: false
 
     signal dragging
     signal dropped
@@ -21,7 +23,7 @@ Item {
 
            anchors.fill: parent
            drag.target: represetntation
-           enabled: type != Figure.NONE
+           enabled: dragable
 
            onPressed: root.dragging();
            onReleased: root.dropped();
@@ -39,6 +41,7 @@ Item {
         Drag.hotSpot.x: size/2
         Drag.hotSpot.y: size/2
         color: "transparent"
+        border.width: 0
 
         Image  {
           id: image
@@ -48,7 +51,7 @@ Item {
           anchors.margins: 2
         }
 
-        states:
+        states: [
             State {
                when: mouse.drag.active
                ParentChange {
@@ -61,7 +64,20 @@ Item {
                    anchors.verticalCenter: undefined;
                    anchors.horizontalCenter: undefined
                }
-             }
+             },
+
+            State {
+                when:root.dragable
+
+                PropertyChanges {
+                    target: represetntation
+                    border.color: Style.color_border_active_side
+                    //border.opacity: 0.5
+                    border.width: 2
+                }
+            }
+
+            ]
     }
 
 

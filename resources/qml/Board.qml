@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import "constants.js" as Constants
+import "."
 
 
 Item {
@@ -7,7 +8,7 @@ Item {
     height: parent.width
     width: height
     property int cell_size: width/Constants.BOARD_SIZE
-
+    property int side: game.activeSide;
     Item {
         id: move
         property int drop_destination: -1
@@ -56,6 +57,7 @@ Item {
 
             model: game.boardController().board;
             ChessFigure {
+               id: figure
                position: index
                size: cell_size
                type: modelData.type;
@@ -76,6 +78,16 @@ Item {
                    if(from >= 0 && to >= 0 )
                     game.boardController().moveFigure(from, to);
 
+               }
+
+               states:
+                   State{
+                   when: root.side
+                   PropertyChanges {
+                       target: figure
+                       dragable: figure.side == root.side
+
+                   }
                }
             }
 
