@@ -15,8 +15,9 @@ class LogicController : public QObject
 public:
     explicit LogicController(const BoardController& board, QObject *parent = 0);
 
-    QList<TIndex> availableMoves(TIndex from) const;
-    bool isMoveAllowed(TIndex from, TIndex to) const;
+    QList<int> availableMoves(int from) const;
+
+    bool isMoveAllowed(int from, int to) const;
     bool isTransitionAllowed(const Transition&  transition) const;
 
 private:

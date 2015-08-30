@@ -6,7 +6,7 @@ Item {
     id: root
     property int side_length: -1
     property int position: -1
-
+    property bool drop_allowed: false
     width: side_length
     height: side_length
 
@@ -41,15 +41,18 @@ Item {
                     ? Style.color_cell_white : Style.color_cell_black
         }
 
-        states:
+        states:[
             State {
-            when: drop_area.dragging
-            PropertyChanges {
-                target: cell
-                color: Style.color_cell_to_drop
+               when: drop_area.dragging
+               PropertyChanges {
+                   target: cell
+                   border.width: 2
+                   color: Style.color_cell_to_drop
+                   border.color: root.drop_allowed ? Style.color_cell_drop_allowed : Style.color_cell_drop_forbidden
 
+               }
             }
-        }
+        ]
 
     }
 }

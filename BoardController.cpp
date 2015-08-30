@@ -51,11 +51,6 @@ BoardController::BoardController(QObject *parent) :
     _initBoard();
 }
 
-const LogicController &BoardController::getLogicController() const
-{
-    return m_logic_controller;
-}
-
 bool BoardController::moveFigure(int from, int to)
 {
     if(!m_logic_controller.isMoveAllowed(from, to))
@@ -73,6 +68,16 @@ bool BoardController::moveFigure(int from, int to)
 Figure *BoardController::figureAt(int index)
 {
     return m_figures.at(index);
+}
+
+QList<int> BoardController::availableMoves(int from) const
+{
+    return m_logic_controller.availableMoves(from);
+}
+
+bool BoardController::isMoveAllowed(int from, int to)
+{
+    return m_logic_controller.isMoveAllowed(from, to);
 }
 
 QQmlListProperty<Figure> BoardController::board()

@@ -9,16 +9,16 @@ LogicController::LogicController(const BoardController &board, QObject *parent)
 {
 }
 
-QList<TIndex> LogicController::availableMoves(TIndex from) const
+QList<int> LogicController::availableMoves(int from) const
 {
-    QList<TIndex> res;
+    QList<int> res;
     res << from;
     res << 0 << 1 << 8 << 9;
 
     return res;
 }
 
-bool LogicController::isMoveAllowed(TIndex from, TIndex to) const
+bool LogicController::isMoveAllowed(int from, int to) const
 {
     return from != to;
 }

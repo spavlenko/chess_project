@@ -16,7 +16,6 @@ Item {
 
     Grid {
         id: board_grid
-
         rows: Constants.BOARD_SIZE
         columns: Constants.BOARD_SIZE
 
@@ -31,15 +30,18 @@ Item {
                 position: index
 
                 onDragEntered: {
-                 move.drop_destination = position;
+                    move.drop_destination = position;
+                    board_cell.drop_allowed =
+                            game.boardController().isMoveAllowed(move.dragging_figure_id, position);
+
                 }
 
                 onDragLeft: {
-                 move.drop_destination = -1;
+                    board_cell.drop_allowed = false;
+                    move.drop_destination = -1;
                 }
             }
         }
-
     }
 
     Grid {
@@ -62,23 +64,17 @@ Item {
 
                onDragging: {
                    move.dragging_figure_id = position;
-                   console.log("Dragging");
                }
 
                onDropped: {
-                   console.log("Move: " + move.dragging_figure_id +
-                               " to: " + move.drop_destination);
                    var from = move.dragging_figure_id;
                    var to =  move.drop_destination;
 
                    move.dragging_figure_id = -1;
                    move.drop_destination = -1;
 
-
                    if(from >= 0 && to >= 0 )
                     game.boardController().moveFigure(from, to);
-
-                   //why if i put move.dragging_figure_id = -1; here, I've got  ReferenceError: move is not defined
 
                }
             }

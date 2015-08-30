@@ -23,10 +23,10 @@ class BoardController : public QObject
 public:
     explicit BoardController(QObject *parent = 0);
 
-    const LogicController& getLogicController() const;
-
     Q_INVOKABLE bool moveFigure(int from,  int to);
     Q_INVOKABLE Figure* figureAt(int index);
+    Q_INVOKABLE QList<int> availableMoves(int from) const; //????????????????
+    Q_INVOKABLE bool isMoveAllowed(int from,  int to);
     Q_INVOKABLE QQmlListProperty<Figure> board();
 
     Q_INVOKABLE void resetBoard();

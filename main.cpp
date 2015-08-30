@@ -6,9 +6,9 @@
 #include <QWidget>
 
 #include"Figure.h"
+
 #include "BoardController.h"
 #include "GameController.h"
-#include "LogicController.h"
 
 int main(int argc, char *argv[])
 {
