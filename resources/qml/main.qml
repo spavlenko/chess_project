@@ -40,98 +40,13 @@ ApplicationWindow {
 
         }
 
-        ColumnLayout {
-            id: buttons_bar_layout
+        ButtonsBar {
+            id: game_controls_bar
             anchors.top: row_layout.top
             anchors.left: board.right;
             anchors.right: row_layout.right;
             anchors.bottom: row_layout.bottom;
-            anchors.margins: 6
-            spacing: 6
-
-            Button {
-                id: button_load
-                Layout.minimumWidth: 50
-                Layout.preferredWidth: 100
-                Layout.minimumHeight: 50
-
-                anchors.left: parent.left; anchors.right: parent.right;
-                Text {
-                    anchors.centerIn: parent
-                    text: "Load game"
-                }
-
-                onClicked: {
-                    game.load();
-                }
-               }
-
-            Button {
-                id: button_save
-                Layout.minimumWidth: 40
-                Layout.preferredWidth: 47
-
-                Layout.minimumHeight: 50
-
-                anchors.left: parent.left; anchors.right: parent.right;
-                Text {
-                    anchors.centerIn: parent
-                    text: "Save game"
-                }
-
-                onClicked: {
-                    game.save();
-                }
-            }
-
-            RowLayout {
-                id: prev_next_layout
-                anchors.top: button_save.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                Button {
-                    id: button_prev
-                    Layout.minimumWidth: 50
-
-                    Layout.minimumHeight: 50
-                    anchors.left: parent.left
-                    anchors.right: parent.horizontalCenter
-
-                    Text {
-                        anchors.centerIn: parent
-                        text: "<<"
-                    }
-
-                    onClicked: {
-                        if(!game.prevTransition())
-                          console.log("Unable to perform prev");
-                    }
-                }
-
-                Button {
-                    id: button_next
-                    Layout.minimumWidth: 50
-
-                    Layout.minimumHeight: 50
-                    anchors.right: parent.right;
-                    anchors.left: parent.horizontalCenter
-
-                    Text {
-                        anchors.centerIn: parent
-                        text: ">>"
-                    }
-
-                    onClicked: {
-                        if(!game.nextTransition())
-                          console.log("Unable to perform next");
-                    }
-                }
-
-            }
-
         }
-
 
     }
 
