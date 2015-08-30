@@ -26,11 +26,10 @@ public:
     const LogicController& getLogicController() const;
 
     Q_INVOKABLE bool moveFigure(int from,  int to);
-
     Q_INVOKABLE Figure* figureAt(int index);
-
     Q_INVOKABLE QQmlListProperty<Figure> board();
 
+    Q_INVOKABLE void resetBoard();
 
     void performTransition(const Transition& transition);
 

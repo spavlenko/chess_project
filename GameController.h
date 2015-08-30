@@ -14,6 +14,11 @@ public:
 
     Q_INVOKABLE BoardController* boardController();
 
+    Q_INVOKABLE void save() const;
+    Q_INVOKABLE void load();
+
+private:
+    void _connectSignals();
 
 private:
     BoardController m_board_controller;

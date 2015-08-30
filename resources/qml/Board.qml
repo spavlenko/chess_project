@@ -4,7 +4,7 @@ import "constants.js" as Constants
 
 Item {
     id: root
-    height: parent.height
+    height: parent.width
     width: height
     property int cell_size: width/Constants.BOARD_SIZE
 

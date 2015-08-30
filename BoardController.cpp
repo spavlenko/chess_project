@@ -81,8 +81,16 @@ QQmlListProperty<Figure> BoardController::board()
     return QQmlListProperty<Figure> (this, m_figures);
 }
 
+void BoardController::resetBoard()
+{
+    _initBoard();
+    emit boardChanged(board());
+}
+
 void BoardController::_initBoard()
 {
+    m_figures.clear();
+
     for(int i = 0; i < 64; ++i)
         m_figures.append(new Figure(this, _ChooseFigure(i), _ChooseSide(i)));
 }
