@@ -4,14 +4,8 @@
 #include <QFile>
 #include <QDir>
 
-
 #include <QDebug>
-namespace
-{
-    const QString save_path =
-            QStandardPaths::writableLocation(QStandardPaths::TempLocation)
-            +  QDir::separator() + "chess.save";
-}
+
 
 GameController::GameController(QObject *parent) :
     QObject(parent),
