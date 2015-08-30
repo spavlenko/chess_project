@@ -2,106 +2,173 @@ import QtQuick 2.0
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 
-ColumnLayout {
-    id: buttons_bar_layout
-    anchors.margins: 6
-    spacing: 6
+import Chess 1.0
 
-    Button {
-        id: button_load
-        Layout.minimumWidth: 50
-        Layout.preferredWidth: 100
-        Layout.minimumHeight: 50
+Item {
+    id: root
+    property int mode: GameController.INIT
 
-        anchors.left: parent.left; anchors.right: parent.right;
-        Text {
-            anchors.centerIn: parent
-            text: "Load game"
-        }
+    signal start;
+    signal stop;
+    signal save;
+    signal load;
+    signal prev;
+    signal next;
 
-        onClicked: {
-            game.load();
-        }
-       }
-
-    Button {
-        id: button_save
-        Layout.minimumWidth: 40
-        Layout.preferredWidth: 47
-
-        Layout.minimumHeight: 50
-
-        anchors.left: parent.left; anchors.right: parent.right;
-        Text {
-            anchors.centerIn: parent
-            text: "Save game"
-        }
-
-        onClicked: {
-            game.save();
-        }
-    }
-
-    RowLayout {
-        id: prev_next_layout
-        anchors.top: button_save.bottom
+    ColumnLayout {
+        id: buttons_bar_layout
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.margins: 6
+        spacing: 6
 
         Button {
-            id: button_prev
-            enabled: false
-            Layout.minimumWidth: 50
-
+            id: button_start_stop
             Layout.minimumHeight: 50
+
+            anchors.left: parent.left; anchors.right: parent.right;
+
+            text: "Start game"
+
+            onClicked: {
+                root.mode == GameController.GAME ? stop() : start();
+            }
+           }
+
+        Button {
+            id: button_load_save
+            Layout.minimumHeight: 50
+
+            anchors.left: parent.left; anchors.right: parent.right;
+            text: "Load game"
+
+            onClicked: {
+                root.mode == GameController.GAME ? save() : load();
+                load();
+            }
+           }
+
+
+        RowLayout {
+            id: prev_next_layout
             anchors.left: parent.left
-            anchors.right: parent.horizontalCenter
+            anchors.right: parent.right
 
-            Text {
-                anchors.centerIn: parent
-                text: "<<"
+            Button {
+                id: button_prev
+                enabled: false
+                Layout.minimumWidth: 50
+
+                Layout.minimumHeight: 50
+                anchors.left: parent.left
+                anchors.right: parent.horizontalCenter
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "prev"
+                }
+
+                onClicked: {
+                    prev();
+                }
             }
 
-            onClicked: {
-                if(!game.prevTransition())
-                  console.log("Unable to perform prev");
+            Button {
+                id: button_next
+                enabled: false
+                Layout.minimumWidth: 50
+
+                Layout.minimumHeight: 50
+                anchors.right: parent.right;
+                anchors.left: parent.horizontalCenter
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "next"
+                }
+
+                onClicked: {
+                    next();
+                }
+            }
+
+            Connections {
+                target: game
+                onNextAvailable: {
+                   button_next.enabled = available;
+                }
+
+                onPrevAvailable: {
+                   button_prev.enabled = available;
+                }
             }
         }
 
-        Button {
-            id: button_next
-            enabled: false
-            Layout.minimumWidth: 50
+        states: [
+            State {
+                when: mode == GameController.INIT
 
-            Layout.minimumHeight: 50
-            anchors.right: parent.right;
-            anchors.left: parent.horizontalCenter
+                PropertyChanges{
+                    target: button_start_stop
+                    text: "Start"
+                }
 
-            Text {
-                anchors.centerIn: parent
-                text: ">>"
+                PropertyChanges{
+                    target: button_load_save
+                    text: "Load"
+                }
+
+                PropertyChanges{
+                    target: prev_next_layout
+                    visible: false
+                }
+
+            },
+
+            State {
+                when: mode == GameController.GAME
+
+                PropertyChanges{
+                    target: button_start_stop
+                    text: "Stop"
+                }
+
+                PropertyChanges{
+                    target: button_load_save
+                    text: "Save"
+                }
+
+                PropertyChanges{
+                    target: prev_next_layout
+                    visible: false
+                }
+
+            },
+
+            State {
+                when: mode == GameController.PLAYBACK
+
+                PropertyChanges{
+                    target: button_start_stop
+                    text: "Start"
+                }
+
+                PropertyChanges{
+                    target: button_load_save
+                    text: "Load"
+                }
+
+                PropertyChanges{
+                    target: prev_next_layout
+                    visible: true
+                }
+
             }
 
-            onClicked: {
-                if(!game.nextTransition())
-                  console.log("Unable to perform next");
-            }
-        }
 
-        Connections {
-            target: game
-            onNextAvailable: {
-                console.log("next aval = " + available);
-               button_next.enabled = available;
-            }
-
-            onPrevAvailable: {
-                console.log("prev aval = " + available);
-               button_prev.enabled = available;
-            }
-        }
+        ]
 
     }
-
 }
 

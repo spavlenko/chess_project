@@ -46,6 +46,15 @@ ApplicationWindow {
             anchors.left: board.right;
             anchors.right: row_layout.right;
             anchors.bottom: row_layout.bottom;
+
+            mode: game.mode
+
+            onStart: game.start();
+            onStop: game.stop();
+            onSave: game.save();
+            onLoad: game.load();
+            onPrev: game.prevTransition();
+            onNext: game.nextTransition();
         }
 
     }

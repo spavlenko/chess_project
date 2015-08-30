@@ -28,7 +28,8 @@ public:
     Q_INVOKABLE bool isMoveAllowed(int from,  int to);
     Q_INVOKABLE QQmlListProperty<Figure> board();
 
-    Q_INVOKABLE void resetBoard();
+    void clearBoard();
+    void resetBoard();
 
     void performTransition(const Transition& transition);
     void rollbackTransition(const Transition& transition);

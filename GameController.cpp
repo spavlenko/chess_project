@@ -15,7 +15,9 @@ namespace
 
 GameController::GameController(QObject *parent) :
     QObject(parent),
-    m_board_controller(this)
+    m_board_controller(this),
+    m_mode(INIT)
+
 {
     _connectSignals();
 }
@@ -23,6 +25,19 @@ GameController::GameController(QObject *parent) :
 BoardController* GameController::boardController()
 {
     return &m_board_controller;
+}
+
+void GameController::start()
+{
+    m_board_controller.resetBoard();
+    _setMode(GAME);
+    _resetActiveSide();
+}
+
+void GameController::stop()
+{
+    m_board_controller.clearBoard();
+    _setMode(INIT);
 }
 
 void GameController::save() const
@@ -59,6 +74,7 @@ void GameController::load()
     boardController()->resetBoard();
     _notifyTransitionsAvaliability();
     _resetActiveSide();
+    _setMode(PLAYBACK);
     qDebug() << "Game sucessfully laded";
 }
 
@@ -93,6 +109,11 @@ Figure::Side GameController::activeSide() const
     return m_active_side;
 }
 
+GameController::Mode GameController::mode() const
+{
+    return m_mode;
+}
+
 void GameController::_connectSignals()
 {
     QObject::connect(&m_board_controller, &BoardController::figureMoved,
@@ -124,5 +145,11 @@ void GameController::_swapActiveSide()
     m_active_side = m_active_side == Figure::WHITE ? Figure::BLACK : Figure::WHITE;
 
     emit activeSideChanged(m_active_side);
+}
+
+void GameController::_setMode(GameController::Mode m)
+{
+    m_mode = m;
+    modeChanged(m_mode);
 }
 

@@ -48,7 +48,7 @@ BoardController::BoardController(QObject *parent) :
     QObject(parent) ,
     m_logic_controller(*this)
 {
-    _initBoard();
+    clearBoard();
 }
 
 bool BoardController::moveFigure(int from, int to)
@@ -78,6 +78,16 @@ bool BoardController::isMoveAllowed(int from, int to)
 QQmlListProperty<Figure> BoardController::board()
 {
     return QQmlListProperty<Figure> (this, m_figures);
+}
+
+void BoardController::clearBoard()
+{
+    m_figures.clear();
+
+    for(int i = 0; i < 64; ++i)
+        m_figures.append(new Figure(this, Figure::Type::NONE, Figure::Side::UNDEF));
+
+    emit boardChanged(board());
 }
 
 void BoardController::resetBoard()
