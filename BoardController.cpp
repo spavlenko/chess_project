@@ -53,7 +53,7 @@ BoardController::BoardController(QObject *parent) :
 
 bool BoardController::moveFigure(int from, int to)
 {
-    if(!m_logic_controller.isMoveAllowed(from, to))
+    if(!m_logic_controller.isMoveAllowed(from, to) || from == to)
         return false;
     auto victim  =  figureAt(to);
     auto victim_type  = victim->type();
@@ -65,14 +65,9 @@ bool BoardController::moveFigure(int from, int to)
     return true;
 }
 
-Figure *BoardController::figureAt(int index)
+const Figure *BoardController::figureAt(int index) const
 {
     return m_figures.at(index);
-}
-
-QList<int> BoardController::availableMoves(int from) const
-{
-    return m_logic_controller.availableMoves(from);
 }
 
 bool BoardController::isMoveAllowed(int from, int to)

@@ -4,7 +4,7 @@ Transition::Transition()
 {
 }
 
-Transition::Transition(TIndex from, TIndex to, Figure::Side victim_side, Figure::Type victim_type)
+Transition::Transition(int from, int to, Figure::Side victim_side, Figure::Type victim_type)
     : m_from(from)
     , m_to(to)
     , m_victim_side(victim_side)

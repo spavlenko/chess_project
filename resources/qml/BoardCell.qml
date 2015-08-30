@@ -13,7 +13,6 @@ Item {
     signal dragEntered
     signal dragLeft
 
-
     DropArea {
         id: drop_area
         property bool dragging: false
@@ -53,6 +52,5 @@ Item {
                }
             }
         ]
-
     }
 }

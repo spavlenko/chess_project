@@ -1,5 +1,7 @@
 #include "LogicController.h"
 #include "BoardController.h"
+#include "FiguresMoveRules.h"
+
 #include "Transition.h"
 
 
@@ -9,18 +11,22 @@ LogicController::LogicController(const BoardController &board, QObject *parent)
 {
 }
 
-QList<int> LogicController::availableMoves(int from) const
-{
-    QList<int> res;
-    res << from;
-    res << 0 << 1 << 8 << 9;
-
-    return res;
-}
 
 bool LogicController::isMoveAllowed(int from, int to) const
 {
-    return from != to;
+    auto figure = m_game_board.figureAt(from);
+    auto target = m_game_board.figureAt(to);
+
+    if(figure->side() == target->side())
+        return false;
+
+    if(!isMoveValid(figure->type(), figure->side(), from, to, target->side() != Figure::UNDEF))
+        return false;
+
+    if(!isPositionAccessible(figure->type(), from, to, m_game_board))
+        return false;
+
+    return true;
 }
 
 bool LogicController::isTransitionAllowed(const Transition &transition) const

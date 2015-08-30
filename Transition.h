@@ -10,7 +10,7 @@ class Transition
 {
 public:
     Transition();
-    Transition(TIndex from, TIndex to, Figure::Side victim_side, Figure::Type victim_type);
+    Transition(int from, int to, Figure::Side victim_side, Figure::Type victim_type);
 
 public:
     qint16 m_from = -1;

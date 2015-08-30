@@ -24,8 +24,7 @@ public:
     explicit BoardController(QObject *parent = 0);
 
     Q_INVOKABLE bool moveFigure(int from,  int to);
-    Q_INVOKABLE Figure* figureAt(int index);
-    Q_INVOKABLE QList<int> availableMoves(int from) const; //????????????????
+    Q_INVOKABLE const Figure* figureAt(int index) const;
     Q_INVOKABLE bool isMoveAllowed(int from,  int to);
     Q_INVOKABLE QQmlListProperty<Figure> board();
 
