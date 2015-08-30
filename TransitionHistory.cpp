@@ -62,6 +62,7 @@ QDataStream &operator<<(QDataStream &data, const TransitionHistory &history)
 
 QDataStream &operator>>(QDataStream &data, TransitionHistory &history)
 {
+    history.clear();
     data >> history.m_transitions;
     history._resetIterator();
 

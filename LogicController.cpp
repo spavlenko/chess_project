@@ -20,7 +20,7 @@ QList<TIndex> LogicController::availableMoves(TIndex from) const
 
 bool LogicController::isMoveAllowed(TIndex from, TIndex to) const
 {
-    return true;
+    return from != to;
 }
 
 bool LogicController::isTransitionAllowed(const Transition &transition) const

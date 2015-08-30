@@ -15,7 +15,7 @@ Transition::Transition(TIndex from, TIndex to, Figure::Side victim_side, Figure:
 QDataStream &operator<<(QDataStream &data, const Transition &transition)
 {
     data << transition.m_from << transition.m_to
-         << (qint8)transition.m_victim_side << (qint8)transition.m_victim_type;
+         << transition.m_victim_side << transition.m_victim_type;
 
     return data;
 }

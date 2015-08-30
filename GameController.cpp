@@ -2,14 +2,16 @@
 
 #include <QStandardPaths>
 #include <QFile>
+#include <QDir>
+
 
 #include <QDebug>
 namespace
 {
     const QString save_path =
-            QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/chess.save";
+            QStandardPaths::writableLocation(QStandardPaths::TempLocation)
+            +  QDir::separator() + "chess.save";
 }
-
 
 GameController::GameController(QObject *parent) :
     QObject(parent),
@@ -27,8 +29,8 @@ void GameController::save() const
 {
     QFile file(save_path);
 
-    if(!file.open(QIODevice::WriteOnly)) {
-        qDebug() << "Something wrong. Can't open file.";
+    if(!file.open(QFile::WriteOnly | QFile::Truncate)) {
+        qDebug() << "Something is wrong. Can't open file.";
         return;
     }
     file.resize(0);
@@ -47,7 +49,7 @@ void GameController::load()
     QFile file(save_path);
 
     if(!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "Something wrong. Can't open file.";
+        qDebug() << "Something is wrong. Can't open file.";
         return;
     }
 
@@ -82,7 +84,6 @@ bool GameController::nextTransition()
     _notifyTransitionsAvaliability();
     return true;
 }
-
 
 void GameController::_connectSignals()
 {
