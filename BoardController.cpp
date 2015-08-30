@@ -60,11 +60,11 @@ bool BoardController::moveFigure(int from, int to)
 {
     if(!m_logic_controller.isMoveAllowed(from, to))
         return false;
+    auto victim  =  figureAt(to);
+    auto victim_type  = victim->type();
+    auto victim_color = victim->side();
 
-    auto victim = figureAt(to)->type();
-    auto actor = figureAt(from)->side();
-
-    Transition t(from, to, actor, victim);
+    Transition t(from, to, victim_color, victim_type);
     _moveFigure(from, to);
     emit figureMoved(t);
     return true;
@@ -93,8 +93,7 @@ void BoardController::performTransition(const Transition &transition)
 
 void BoardController::rollbackTransition(const Transition &transition)
 {
-    //to do: change actor color
-    _moveFigure(transition.m_to, transition.m_from, transition.m_victim, transition.m_actor);
+    _moveFigure(transition.m_to, transition.m_from, transition.m_victim_type, transition.m_victim_side);
 }
 
 void BoardController::_initBoard()

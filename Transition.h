@@ -10,13 +10,13 @@ class Transition
 {
 public:
     Transition();
-    Transition(TIndex from, TIndex to, Figure::Side actor, Figure::Type victim);
+    Transition(TIndex from, TIndex to, Figure::Side victim_side, Figure::Type victim_type);
 
 public:
     qint16 m_from = -1;
     qint16 m_to = -1;
-    Figure::Side m_actor = Figure::UNDEF;
-    Figure::Type m_victim = Figure::NONE;
+    Figure::Side m_victim_side = Figure::UNDEF;
+    Figure::Type m_victim_type = Figure::NONE;
 };
 
  QDataStream &operator<<(QDataStream &data, const Transition &transition);
