@@ -2,12 +2,11 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 
-import "constants.js" as Constants
 
 ApplicationWindow {
     visible: true
-    width: Constants.WND_MINIMUM_WIDTH
-    height: Constants.WND_MINIMUM_HEIGHT
+    width: 640
+    height: 480
 
     title: qsTr("Chess")
 

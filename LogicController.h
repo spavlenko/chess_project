@@ -17,8 +17,6 @@ public:
 
     bool isMoveAllowed(int from, int to) const;
 
-    bool isTransitionAllowed(const Transition&  transition) const;
-
 private:
     const BoardController& m_game_board;
 

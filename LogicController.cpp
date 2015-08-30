@@ -29,9 +29,5 @@ bool LogicController::isMoveAllowed(int from, int to) const
     return true;
 }
 
-bool LogicController::isTransitionAllowed(const Transition &transition) const
-{
-    return true;
-}
 
 

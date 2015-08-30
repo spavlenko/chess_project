@@ -21,18 +21,20 @@ namespace  {
         return row * board_size + col;
     }
 
-    bool isMoveValidPawn(Figure::Side side, int from, int to, bool attack)
+    int _coordToIndex(const TCoordinate& coord)
     {
-        auto coord_to = _indexToCoord(to);
-        auto coord_from = _indexToCoord(from);
+       return _coordToIndex(coord.first, coord.second);
+    }
 
+    bool isMoveValidPawn(Figure::Side side, const TCoordinate& from, const TCoordinate& to, bool attack)
+    {
         bool direction_down = Figure::BLACK == side;
 
-        if(direction_down && to < from)
+        if(direction_down && _coordToIndex(to) < _coordToIndex(from))
             return false;
 
-        int x_disp = std::abs(coord_from.first - coord_to.first);
-        int y_disp = std::abs(coord_from.second - coord_to.second);
+        int x_disp = std::abs(from.first - to.first);
+        int y_disp = std::abs(from.second - to.second);
 
         if(attack)
         {
@@ -41,55 +43,43 @@ namespace  {
             else
                 return false;
         }
-        bool is_first_move = coord_from.first == 1 || coord_from.first == 6;
+        bool is_first_move = from.first == 1 || from.first == 6;
         int max_x_disp = is_first_move ? 3 : 2;
 
         return (x_disp < max_x_disp) && (y_disp == 0);
     }
 
-    bool isMoveValidRook(int from, int to)
+    bool isMoveValidRook(const TCoordinate& from, const TCoordinate& to)
     {
-        auto coord_to = _indexToCoord(to);
-        auto coord_from = _indexToCoord(from);
-
-        return coord_to.first == coord_from.first ||
-                coord_to.second == coord_from.second;
+        return to.first == from.first ||
+                to.second == from.second;
     }
 
-    bool isMoveValidBishop(int from, int to)
+    bool isMoveValidBishop(const TCoordinate& from, const TCoordinate& to)
     {
-        auto coord_to = _indexToCoord(to);
-        auto coord_from = _indexToCoord(from);
-
-        return std::abs(coord_from.first - coord_to.first) ==
-                std::abs(coord_from.second - coord_to.second);
+        return std::abs(from.first - to.first) ==
+                std::abs(from.second - to.second);
     }
 
-    bool isMoveValidKnight(int from, int to)
+    bool isMoveValidKnight(const TCoordinate& from, const TCoordinate& to)
     {
-        auto coord_to = _indexToCoord(to);
-        auto coord_from = _indexToCoord(from);
-
-        int x_disp = std::abs(coord_from.first - coord_to.first);
-        int y_disp = std::abs(coord_from.second - coord_to.second);
+        int x_disp = std::abs(from.first - to.first);
+        int y_disp = std::abs(from.second - to.second);
 
         return (x_disp == 2 && y_disp == 1) ||
                 (x_disp == 1 && y_disp == 2);
     }
 
-    bool isMoveValidQueen(int from, int to)
+    bool isMoveValidQueen(const TCoordinate& from, const TCoordinate& to)
     {
         return isMoveValidRook(from, to) ||
                  isMoveValidBishop(from, to);
     }
 
-    bool isMoveValidKing(int from, int to)
+    bool isMoveValidKing(const TCoordinate& from, const TCoordinate& to)
     {
-        auto coord_to = _indexToCoord(to);
-        auto coord_from = _indexToCoord(from);
-
-        int x_disp = std::abs(coord_from.first - coord_to.first);
-        int y_disp = std::abs(coord_from.second - coord_to.second);
+        int x_disp = std::abs(from.first - to.first);
+        int y_disp = std::abs(from.second - to.second);
 
         return x_disp < 2 && y_disp < 2;
     }
@@ -145,26 +135,27 @@ namespace  {
                 isPositionAccessibleBishop(from, to, board);
     }
 
-
-
 }
 
 
 bool isMoveValid(Figure::Type type, Figure::Side side, int from, int to, bool attack)
 {
+    auto coord_to = _indexToCoord(to);
+    auto coord_from = _indexToCoord(from);
+
     switch (type) {
     case Figure::PAWN:
-        return isMoveValidPawn(side, from, to, attack);
+        return isMoveValidPawn(side, coord_from, coord_to, attack);
     case Figure::ROOK:
-        return isMoveValidRook(from, to);
+        return isMoveValidRook(coord_from, coord_to);
     case Figure::BISHOP:
-        return isMoveValidBishop(from, to);
+        return isMoveValidBishop(coord_from, coord_to);
     case Figure::KNIGHT:
-        return isMoveValidKnight(from, to);
+        return isMoveValidKnight(coord_from, coord_to);
     case Figure::QUEEN:
-        return isMoveValidQueen(from, to);
+        return isMoveValidQueen(coord_from, coord_to);
     case Figure::KING:
-        return isMoveValidKing(from, to);
+        return isMoveValidKing(coord_from, coord_to);
 
     default:
         assert(!"Should not happen");

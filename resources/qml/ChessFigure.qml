@@ -72,7 +72,6 @@ Item {
                 PropertyChanges {
                     target: represetntation
                     border.color: Style.color_border_active_side
-                    //border.opacity: 0.5
                     border.width: 2
                 }
             }

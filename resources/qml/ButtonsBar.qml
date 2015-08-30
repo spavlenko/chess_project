@@ -29,8 +29,6 @@ Item {
 
             anchors.left: parent.left; anchors.right: parent.right;
 
-            text: "Start game"
-
             onClicked: {
                 root.mode == GameController.GAME ? stop() : start();
             }
@@ -41,7 +39,6 @@ Item {
             Layout.minimumHeight: 50
 
             anchors.left: parent.left; anchors.right: parent.right;
-            text: "Load game"
 
             onClicked: {
                 root.mode == GameController.GAME ? save() : load();
