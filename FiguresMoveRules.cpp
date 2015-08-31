@@ -117,7 +117,7 @@ namespace  {
         auto start = std::min(from, to);
         auto end =  std::max(from, to);
 
-        int step = Constants.board_size - 1;
+        int step = Constants::board_size - 1;
 
         for(; start < end; start += step)
             if(board.figureAt(start)->type() != Figure::NONE && board.figureAt(start)->type() != type)
