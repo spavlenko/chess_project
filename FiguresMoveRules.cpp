@@ -43,7 +43,9 @@ namespace  {
             else
                 return false;
         }
-        bool is_first_move = from.first == 1 || from.first == 6;
+        bool is_first_move = from.first == Constants::black_second_row ||
+                             from.first == Constants::white_second_row;
+
         int max_x_disp = is_first_move ? 3 : 2;
 
         return (x_disp < max_x_disp) && (y_disp == 0);
@@ -72,8 +74,10 @@ namespace  {
 
     bool isMoveValidQueen(const TCoordinate& from, const TCoordinate& to)
     {
-        return isMoveValidRook(from, to) ||
-                 isMoveValidBishop(from, to);
+        bool is_diagonal_valid = isMoveValidBishop(from, to);
+        bool is_parralel_valid = isMoveValidRook(from, to);
+        return (is_diagonal_valid || is_parralel_valid) &&
+               !(is_diagonal_valid && is_parralel_valid);
     }
 
     bool isMoveValidKing(const TCoordinate& from, const TCoordinate& to)
@@ -114,10 +118,15 @@ namespace  {
 
     bool isPositionAccessibleDiagonal(int from, int to, const BoardController &board, Figure::Type type)
     {
-        auto start = std::min(from, to);
-        auto end =  std::max(from, to);
+        int start = std::min(from, to);
+        int end =  std::max(from, to);
 
-        int step = Constants::board_size - 1;
+        auto s_coord = _indexToCoord(start);
+        auto e_coord = _indexToCoord(end);
+
+        bool moving_right = s_coord.second < e_coord.second;
+
+        int step = Constants::board_size + (moving_right ? 1 : -1);
 
         for(; start < end; start += step)
             if(board.figureAt(start)->type() != Figure::NONE && board.figureAt(start)->type() != type)

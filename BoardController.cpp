@@ -7,10 +7,10 @@ namespace {
   {
       auto row = index / Constants::board_size;
 
-      if(row < 2)
+      if(row <= Constants::black_second_row )
         return Figure::Side::BLACK;
 
-      if (row > 5)
+      if (row >= Constants::white_second_row)
         return Figure::Side::WHITE;
 
       return Figure::Side::UNDEF;
@@ -20,9 +20,10 @@ namespace {
   {
       auto row = index / Constants::board_size;
 
-      if(row == 1 || row == 6)
+      if(row == Constants::white_second_row || row == Constants::black_second_row)
         return Figure::Type::PAWN;
-      else if(row != 0 && row != 7)
+
+      else if(row != Constants::white_first_row && row != Constants::black_first_row)
         return Figure::Type::NONE;
 
       auto column = index % Constants::board_size;
@@ -42,6 +43,8 @@ namespace {
 
       return Figure::Type::NONE;
   }
+
+  const int board_items_count = Constants::board_size * Constants::board_size;
 
 }
 
@@ -85,7 +88,7 @@ void BoardController::clearBoard()
 {
     m_figures.clear();
 
-    for(int i = 0; i < 64; ++i)
+    for(int i = 0; i < board_items_count; ++i)
         m_figures.append(new Figure(this, Figure::Type::NONE, Figure::Side::UNDEF));
 
     emit boardChanged(board());
@@ -111,7 +114,7 @@ void BoardController::_initBoard()
 {
     m_figures.clear();
 
-    for(int i = 0; i < 64; ++i)
+    for(int i = 0; i < board_items_count; ++i)
         m_figures.append(new Figure(this, _ChooseFigure(i), _ChooseSide(i)));
 }
 
