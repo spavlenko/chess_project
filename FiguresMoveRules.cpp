@@ -117,10 +117,7 @@ namespace  {
         auto start = std::min(from, to);
         auto end =  std::max(from, to);
 
-        auto coord_to = _indexToCoord(end);
-        auto coord_from = _indexToCoord(start);
-
-        int step = coord_from.second - coord_to.second + Constants::board_size;
+        int step = Constants.board_size - 1;
 
         for(; start < end; start += step)
             if(board.figureAt(start)->type() != Figure::NONE && board.figureAt(start)->type() != type)
