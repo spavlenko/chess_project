@@ -17,6 +17,7 @@ Figure::Figure(QObject *parent, Figure::Type type, Figure::Side side):
 
 }
 
+
 Figure::Side Figure::side() const
 {
     return m_side;

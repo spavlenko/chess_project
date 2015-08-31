@@ -23,6 +23,7 @@ BoardController* GameController::boardController()
 
 void GameController::start()
 {
+    m_transition_history.clear();
     m_board_controller.resetBoard();
     _setMode(GAME);
     _resetActiveSide();
@@ -31,6 +32,7 @@ void GameController::start()
 void GameController::stop()
 {
     m_board_controller.clearBoard();
+    m_transition_history.clear();
     _setMode(INIT);
 }
 

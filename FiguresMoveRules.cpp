@@ -101,15 +101,19 @@ namespace  {
 
         for(int i = start.first; i < end.first; ++i)
         {
-            auto f_type = board.figureAt(_coordToIndex(i, start.second))->type();
-            if( f_type != Figure::NONE && f_type != type)
+            int index =_coordToIndex(i, start.second);
+            auto f_type = board.figureAt(index)->type();
+            if( f_type != Figure::NONE && f_type != type  && index != to)
                 return false;
+
         }
 
         for(int i = start.second; i < end.second; ++i)
         {
-            auto f_type = board.figureAt(_coordToIndex(start.first, i))->type();
-            if( f_type != Figure::NONE && f_type != type)
+
+            int index =_coordToIndex(i, start.second);
+            auto f_type = board.figureAt(index)->type();
+            if( f_type != Figure::NONE && f_type != type && index != to)
                 return false;
         }
 
@@ -129,7 +133,9 @@ namespace  {
         int step = Constants::board_size + (moving_right ? 1 : -1);
 
         for(; start < end; start += step)
-            if(board.figureAt(start)->type() != Figure::NONE && board.figureAt(start)->type() != type)
+            if(board.figureAt(start)->type() != Figure::NONE
+                    && board.figureAt(start)->type() != type
+                    && start != to)
                 return false;
 
         return true;

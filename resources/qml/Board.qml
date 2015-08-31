@@ -86,7 +86,7 @@ Item {
                    when: root.side
                    PropertyChanges {
                        target: figure
-                       dragable: figure.side == root.side && game.mode != GameController.PLAYBACK
+                       dragable: figure.side == root.side && game.mode !== GameController.PLAYBACK
 
                    }
                }
