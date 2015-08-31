@@ -1,11 +1,6 @@
 #ifndef BOARDCONTROLLER_H
 #define BOARDCONTROLLER_H
 
-/*
- * Constorls interaction with Board
- *
-*/
-
 #include "Figure.h"
 #include "LogicController.h"
 #include "Transition.h"
