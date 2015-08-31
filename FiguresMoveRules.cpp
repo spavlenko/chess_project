@@ -84,7 +84,7 @@ namespace  {
         return x_disp < 2 && y_disp < 2;
     }
 
-    bool isPositionAccessibleRook(int from, int to, const BoardController &board)
+    bool isPositionAccessibleParallel(int from, int to, const BoardController &board, Figure::Type type)
     {
         auto coord_to = _indexToCoord(to);
         auto coord_from = _indexToCoord(from);
@@ -97,22 +97,22 @@ namespace  {
 
         for(int i = start.first; i < end.first; ++i)
         {
-            auto type = board.figureAt(_coordToIndex(i, start.second))->type();
-            if( type != Figure::NONE && type != Figure::ROOK)
+            auto f_type = board.figureAt(_coordToIndex(i, start.second))->type();
+            if( f_type != Figure::NONE && f_type != type)
                 return false;
         }
 
         for(int i = start.second; i < end.second; ++i)
         {
-            auto type = board.figureAt(_coordToIndex(start.first, i))->type();
-            if( type != Figure::NONE && type != Figure::ROOK)
+            auto f_type = board.figureAt(_coordToIndex(start.first, i))->type();
+            if( f_type != Figure::NONE && f_type != type)
                 return false;
         }
 
         return true;
     }
 
-    bool isPositionAccessibleBishop(int from, int to, const BoardController &board)
+    bool isPositionAccessibleDiagonal(int from, int to, const BoardController &board, Figure::Type type)
     {
         auto start = std::min(from, to);
         auto end =  std::max(from, to);
@@ -123,7 +123,7 @@ namespace  {
         int step = coord_from.second - coord_to.second + Constants::board_size;
 
         for(; start < end; start += step)
-            if(board.figureAt(start)->type() != Figure::NONE && board.figureAt(start)->type() != Figure::BISHOP)
+            if(board.figureAt(start)->type() != Figure::NONE && board.figureAt(start)->type() != type)
                 return false;
 
         return true;
@@ -131,8 +131,8 @@ namespace  {
 
     bool isPositionAccessibleQueen(int from, int to, const BoardController &board)
     {
-        return isPositionAccessibleRook(from, to, board) ||
-                isPositionAccessibleBishop(from, to, board);
+        return isPositionAccessibleDiagonal(from, to, board, Figure::QUEEN) ||
+                isPositionAccessibleParallel(from, to, board, Figure::QUEEN);
     }
 
 }
@@ -172,10 +172,10 @@ bool isPositionAccessible(Figure::Type type, int from, int to, const BoardContro
         return true;
 
     case Figure::ROOK:
-        return isPositionAccessibleRook(from, to, board);
+        return isPositionAccessibleParallel(from, to, board, Figure::ROOK);
 
     case Figure::BISHOP:
-         return isPositionAccessibleBishop(from, to, board);
+         return isPositionAccessibleDiagonal(from, to, board, Figure::BISHOP);
 
     case Figure::QUEEN:
          return isPositionAccessibleQueen(from, to, board);
